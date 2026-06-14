@@ -195,6 +195,7 @@ pyinstaller --clean --onefile -w -i ".\Banchen123.ico" --uac-admin --add-data ".
 ![desktop](Desktop.png)
 
 </center>
+
 ---
 
 ## ⚠️ 免责声明与注意事项
