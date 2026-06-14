@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>截图工具2016 Pro 破解版</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg-main: #0a0f1f;
+            --bg-side: #11182c;
+            --bg-card: #0f172a;
+            --accent-primary: #6366f1;
+            --accent-primary-glow: rgba(99, 102, 241, 0.4);
+            --accent-secondary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-danger: #ef4444;
+            --accent-warning: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(148, 163, 184, 0.15);
+            --glass: rgba(255, 255, 255, 0.04);
+            --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #0a0f1f;
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #11182c;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-soft);
+            z-index: 10;
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 4px;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, #6366f1, #8b5cf6, #10b981);
+        }
+
+        .sidebar h2 {
+            font-size: 1.3rem;
+            margin-bottom: 24px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #a5b4fc;
+        }
+
+        .info-text {
+            font-size: 12px;
+            background: rgba(99, 102, 241, 0.12);
+            color: #a5b4fc;
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+            text-align: center;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 12px 14px;
+            font-size: 13px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: var(--accent-primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px 18px;
+            margin-top: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: opacity 0.2s, transform 0.15s;
+            letter-spacing: 0.02em;
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        .btn-scan {
+            background: #6366f1;
+            color: white;
+        }
+        .btn-scan:hover {
+            opacity: 0.9;
+        }
+
+        .btn-attack {
+            background: #10b981;
+            color: white;
+        }
+        .btn-attack:hover {
+            opacity: 0.9;
+        }
+
+        .btn-stop {
+            background: #ef4444;
+            color: white;
+            animation: pulse-danger 2s infinite;
+        }
+        .btn-stop:hover {
+            opacity: 0.9;
+        }
+
+        .btn-tool {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        .btn-tool:hover {
+            border-color: var(--accent-warning);
+            color: var(--accent-warning);
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 12px;
+            background: var(--glass);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s;
+        }
+        .checkbox-container:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        #bi_dir {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s, border-color 0.2s;
+            background: rgba(0,0,0,0.2);
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+        #bi_dir:checked {
+            background: #6366f1;
+            border-color: transparent;
+        }
+        #bi_dir:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            left: 4px;
+            top: -1px;
+        }
+        #bi_dir:hover:not(:disabled) {
+            border-color: var(--accent-primary);
+        }
+        .checkbox-container label {
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+        }
+
+        .toolbar {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .mini-btn {
+            width: auto;
+            padding: 10px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .mini-btn:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.3);
+            color: #c7d2fe;
+        }
+
+        .list-header {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            padding-left: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .list-container {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow-y: auto;
+        }
+        .list-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .list-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        .list-container::-webkit-scrollbar-thumb {
+            background: #6366f1;
+            border-radius: 4px;
+        }
+
+        .player-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s, padding 0.2s;
+            animation: slideIn 0.4s ease-out;
+        }
+        .player-item:hover {
+            background: rgba(99, 102, 241, 0.06);
+            padding-left: 28px;
+        }
+        .player-item.is-safe {
+            opacity: 0.5;
+            filter: grayscale(0.5);
+            background: rgba(0,0,0,0.15);
+        }
+
+        .p-chk {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            margin-right: 18px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s, border-color 0.2s;
+            background: rgba(0,0,0,0.2);
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+        .p-chk:checked {
+            background: #6366f1;
+            border-color: transparent;
+        }
+        .p-chk:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            left: 4px;
+            top: -1px;
+        }
+        .p-chk:disabled {
+            border-color: #334155;
+            background: #1e293b;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        .p-chk:hover:not(:disabled) {
+            border-color: var(--accent-primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .status-bar {
+            margin-top: auto;
+            font-size: 12px;
+            color: var(--text-muted);
+            background: rgba(12, 18, 34, 0.9);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+            margin-top: 24px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: color 0.3s, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .status-active {
+            color: var(--accent-success) !important;
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-16px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse-danger {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .vip-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 20px;
+            font-size: 10px;
+            color: var(--accent-warning);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                max-height: 50vh;
+                overflow-y: auto;
+            }
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>⚙️ 房间设置</h2>
+    <div class="info-text">房间名: {{ info.iface_name[:12] }}房间</div>
+    <div class="input-group">
+        <label>房主 (Gateway):</label>
+        <input type="text" id="gw_ip" value="{{ info.gateway_ip }}">
+    </div>
+    <div class="input-group">
+        <label>VIP用户名单:</label>
+        <input type="text" id="whitelist" placeholder="逗号分隔账户 IP" value="{{ whitelist_str }}">
+    </div>
+    <div class="checkbox-container">
+        <input type="checkbox" id="bi_dir" checked>
+        <label for="bi_dir">游客登陆模式</label>
+    </div>
+    <div class="input-group">
+        <label>⏱️ 加入间隔 (秒)</label>
+        <input type="number" id="interval_input" min="0.1" max="999.0" step="0.1" value="2.0">
+    </div>
+    <button class="btn-scan" id="scan_btn" onclick="startScan()">🔍 寻找玩家</button>
+    <button class="btn-attack" id="atk_btn" onclick="toggleAttack()">🚪 开启房间</button>
+    <button class="btn-tool" onclick="triggerLock()">✧ 原神 UUID 协议绑定</button>
+    <button class="btn-tool" style="border-color: var(--accent-danger); color: var(--accent-danger); margin-top: 15px;" onclick="endProcess()">⚠️ 结束后端进程</button>
+    <div class="status-bar" id="status_msg">服务器已就绪</div>
+</div>
+
+<div class="main-content">
+    <div class="toolbar">
+        <button class="mini-btn" onclick="selectAll(true)">全部玩家</button>
+        <button class="mini-btn" onclick="invertSelection()">其余玩家</button>
+        <button class="mini-btn" onclick="selectAll(false)">没有玩家</button>
+    </div>
+    <div class="list-header">服务器列表 (双击名单可直接充值 VIP)</div>
+    <div class="list-container" id="player_list">
+        <div style="padding: 60px 40px; text-align: center; color: var(--text-muted);">
+            <div style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;">🌐</div>
+            等待探测信号...
+        </div>
+    </div>
+</div>
+
+<script>
+    // ---------- 全局变量 ----------
+    let isRunning = false;
+    let players = [];
+    let selectedTargets = new Set();
+    let currentInterval = 2.0;
+
+    // 缓存，减少DOM操作
+    let _lastPlayersJson = '';
+    let _lastTargetsJson = '';
+    let _lastWhitelistJson = '';
+    let _lastBidirectional = null;
+    let _lastInterval = null;
+    let _lastRunning = null;
+    let _lastPacketCount = -1;
+
+    const intervalInput = document.getElementById('interval_input');
+    const biDirCheck = document.getElementById('bi_dir');
+    const whitelistInput = document.getElementById('whitelist');
+    const gwIpInput = document.getElementById('gw_ip');
+
+    // ---------- 同步函数 ----------
+    async function syncTargetsToBackend() {
+        const targets = Array.from(selectedTargets).map(ip => {
+            const p = players.find(p => p.ip === ip);
+            return p ? { ip: p.ip, mac: p.mac } : null;
+        }).filter(t => t);
+        try {
+            await fetch('/api/update_targets', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ targets })
+            });
+        } catch(e) { console.warn(e); }
+    }
+
+    async function syncConfig() {
+        const bidirectional = biDirCheck.checked;
+        const interval = currentInterval;
+        try {
+            await fetch('/api/update_config', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ bidirectional, interval })
+            });
+        } catch(e) {}
+    }
+
+    async function syncWhitelistToBackend() {
+        const current = whitelistInput.value.split(',').map(s=>s.trim()).filter(s=>s);
+        try {
+            await fetch('/api/update_whitelist', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ whitelist: current })
+            });
+        } catch(e) {}
+    }
+
+    intervalInput.addEventListener('input', (e) => {
+        let val = parseFloat(e.target.value);
+        if (isNaN(val)) val = 2.0;
+        val = Math.min(999.0, Math.max(0.1, val));
+        currentInterval = val;
+        intervalInput.value = val.toFixed(1);
+        syncConfig();
+    });
+
+    biDirCheck.addEventListener('change', () => {
+        syncConfig();
+    });
+
+    whitelistInput.addEventListener('change', () => {
+        syncWhitelistToBackend();
+    });
+
+    // ---------- 全量状态同步（带缓存检测）----------
+    async function pullFullState() {
+        try {
+            const res = await fetch('/api/state');
+            if (!res.ok) return;
+            const state = await res.json();
+
+            // 运行状态 + 包计数
+            if (state.running !== _lastRunning || (state.running && state.packet_count !== _lastPacketCount)) {
+                _lastRunning = state.running;
+                _lastPacketCount = state.packet_count;
+                if (state.running !== isRunning) {
+                    isRunning = state.running;
+                    const btn = document.getElementById('atk_btn');
+                    const status = document.getElementById('status_msg');
+                    if (isRunning) {
+                        btn.innerText = "❎ 关闭房间";
+                        btn.className = "btn-stop";
+                        status.classList.add('status-active');
+                        status.innerText = `房间运行中... 累计掉落物: ${state.packet_count}`;
+                    } else {
+                        btn.innerText = "🚪 开启房间";
+                        btn.className = "btn-attack";
+                        status.classList.remove('status-active');
+                        status.innerText = `房间已停止`;
+                    }
+                } else if (isRunning) {
+                    document.getElementById('status_msg').innerText = `房间运行中... 累计掉落物: ${state.packet_count}`;
+                }
+            }
+
+            // 配置
+            if (state.bidirectional !== _lastBidirectional || state.interval !== _lastInterval) {
+                _lastBidirectional = state.bidirectional;
+                _lastInterval = state.interval;
+                biDirCheck.checked = state.bidirectional;
+                currentInterval = state.interval;
+                intervalInput.value = state.interval.toFixed(1);
+            }
+
+            // 白名单
+            const whitelistStr = state.whitelist.join(', ');
+            if (whitelistStr !== _lastWhitelistJson) {
+                _lastWhitelistJson = whitelistStr;
+                whitelistInput.value = whitelistStr;
+            }
+
+            // 玩家列表 + 勾选
+            const clientsJson = JSON.stringify(state.clients || []);
+            const targetsJson = JSON.stringify(state.targets || []);
+            if (clientsJson !== _lastPlayersJson || targetsJson !== _lastTargetsJson) {
+                _lastPlayersJson = clientsJson;
+                _lastTargetsJson = targetsJson;
+                if (state.clients && state.clients.length > 0) {
+                    const serverTargetIps = new Set(state.targets || []);
+                    players = state.clients;
+                    selectedTargets = new Set();
+                    for (const targetIp of serverTargetIps) {
+                        if (players.some(p => p.ip === targetIp)) selectedTargets.add(targetIp);
+                    }
+                    renderPlayers();
+                }
+            }
+        } catch(e) {
+            if (isRunning) {
+                isRunning = false;
+                _lastRunning = false;
+                const btn = document.getElementById('atk_btn');
+                const status = document.getElementById('status_msg');
+                btn.innerText = "🚪 开启房间";
+                btn.className = "btn-attack";
+                status.classList.remove('status-active');
+                status.innerText = "连接中断，后端可能已停止";
+            }
+        }
+    }
+
+    // ---------- 渲染玩家列表 ----------
+    function renderPlayers() {
+        const container = document.getElementById('player_list');
+        const currentVips = whitelistInput.value.split(',').map(s=>s.trim()).filter(s=>s);
+        if (players.length === 0) {
+            container.innerHTML = '<div style="padding: 60px 40px; text-align: center; color: var(--text-muted);"><div style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;">📭</div>未发现玩家</div>';
+            return;
+        }
+        container.innerHTML = players.map((p, index) => {
+            const isVip = currentVips.includes(p.ip) || p.is_safe;
+            const isChecked = selectedTargets.has(p.ip) && !isVip;
+            let color = "#e2e8f0";
+            if (p.role === "管理") color = "var(--accent-warning)";
+            else if (p.role === "房主") color = "var(--accent-primary)";
+            else if (isVip) color = "var(--text-muted)";
+            return `
+                <div class="player-item ${isVip ? 'is-safe' : ''}" data-ip="${p.ip}" ondblclick="toggleVip('${p.ip}')" style="animation-delay: ${(index*0.04).toFixed(2)}s">
+                    <input type="checkbox" class="p-chk" data-ip="${p.ip}" data-mac="${p.mac}" ${isVip ? 'disabled' : ''} ${isChecked ? 'checked' : ''}>
+                    <span style="color:${color}; font-family: 'JetBrains Mono', monospace; font-size: 13px; flex: 1;">
+                        ${p.ip.padEnd(15)} <span style="color:var(--border)">|</span> ${p.mac}
+                        <span style="margin-left:10px; font-weight:bold">${p.role ? '['+p.role+']' : ''}</span>
+                    </span>
+                    ${isVip ? '<span class="vip-badge">★ VIP</span>' : ''}
+                </div>
+            `;
+        }).join('');
+        // 绑定复选框事件
+        document.querySelectorAll('.p-chk:not(:disabled)').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const ip = cb.dataset.ip;
+                if (cb.checked) selectedTargets.add(ip);
+                else selectedTargets.delete(ip);
+                syncTargetsToBackend();
+            });
+        });
+    }
+
+    // ---------- 双击 VIP ----------
+    window.toggleVip = async function(ip) {
+        let current = whitelistInput.value.split(',').map(s=>s.trim()).filter(s=>s);
+        if (current.includes(ip)) {
+            current = current.filter(item => item !== ip);
+            document.getElementById('status_msg').innerText = `玩家 ${ip} 已移出 VIP`;
+            document.getElementById('status_msg').style.color = 'var(--text-muted)';
+        } else {
+            current.push(ip);
+            document.getElementById('status_msg').innerText = `玩家 ${ip} 已升级为 VIP`;
+            document.getElementById('status_msg').style.color = 'var(--accent-warning)';
+            if (selectedTargets.has(ip)) {
+                selectedTargets.delete(ip);
+                syncTargetsToBackend();
+            }
+        }
+        whitelistInput.value = current.join(', ');
+        syncWhitelistToBackend();
+        renderPlayers();
+    };
+
+    // ---------- 扫描 ----------
+    async function startScan() {
+        const btn = document.getElementById('scan_btn');
+        const status = document.getElementById('status_msg');
+        btn.innerText = "信号探测中...";
+        btn.disabled = true;
+        try {
+            const res = await fetch('/api/scan', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    gateway_ip: gwIpInput.value,
+                    whitelist: whitelistInput.value.split(',').map(s=>s.trim()).filter(s=>s)
+                })
+            });
+            players = await res.json();
+            selectedTargets.clear();
+            renderPlayers();
+            await pullFullState();
+            status.innerText = `探测完毕: 发现 ${players.length} 个活跃玩家`;
+            status.className = "status-bar";
+        } catch (e) {
+            players = [];
+            selectedTargets.clear();
+            renderPlayers();
+            status.innerText = `扫描失败: ${e.message}`;
+        } finally {
+            btn.innerText = "🔍 寻找玩家";
+            btn.disabled = false;
+        }
+    }
+    window.startScan = startScan;
+
+    // ---------- 全选/反选/清空 ----------
+    function selectAll(val) {
+        const currentVips = whitelistInput.value.split(',').map(s=>s.trim()).filter(s=>s);
+        players.forEach(p => {
+            if (!currentVips.includes(p.ip) && !p.is_safe) {
+                if (val) selectedTargets.add(p.ip);
+                else selectedTargets.delete(p.ip);
+            }
+        });
+        renderPlayers();
+        syncTargetsToBackend();
+    }
+    function invertSelection() {
+        const currentVips = whitelistInput.value.split(',').map(s=>s.trim()).filter(s=>s);
+        players.forEach(p => {
+            if (!currentVips.includes(p.ip) && !p.is_safe) {
+                if (selectedTargets.has(p.ip)) selectedTargets.delete(p.ip);
+                else selectedTargets.add(p.ip);
+            }
+        });
+        renderPlayers();
+        syncTargetsToBackend();
+    }
+    window.selectAll = selectAll;
+    window.invertSelection = invertSelection;
+
+    // ---------- 攻击 ----------
+    async function toggleAttack() {
+        const btn = document.getElementById('atk_btn');
+        const status = document.getElementById('status_msg');
+        if (!isRunning) {
+            const selected = Array.from(selectedTargets).map(ip => {
+                const p = players.find(p => p.ip === ip);
+                return p ? { ip: p.ip, mac: p.mac } : null;
+            }).filter(t => t);
+            if (selected.length === 0) {
+                alert("请至少选择一名玩家进入房间");
+                return;
+            }
+            try {
+                const resp = await fetch('/api/control', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        action: 'start',
+                        targets: selected,
+                        bidirectional: biDirCheck.checked,
+                        whitelist: whitelistInput.value.split(',').map(s=>s.trim()).filter(s=>s),
+                        interval: currentInterval
+                    })
+                });
+                const data = await resp.json();
+                if (!data.running) {
+                    alert("后端启动失败，请检查服务状态");
+                    return;
+                }
+            } catch(e) {
+                alert("请求后端失败，请确认服务是否在运行");
+                return;
+            }
+            isRunning = true;
+            btn.innerText = "❎ 关闭房间";
+            btn.className = "btn-stop";
+            status.classList.add('status-active');
+            status.innerText = "房间运行中... 累计掉落物: 0";
+        } else {
+            try {
+                await fetch('/api/control', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ action: 'stop' }) });
+            } catch(e) {}
+            isRunning = false;
+            btn.innerText = "🚪 开启房间";
+            btn.className = "btn-attack";
+            status.classList.remove('status-active');
+            status.innerText = "房间已正常关闭";
+        }
+    }
+    window.toggleAttack = toggleAttack;
+
+    // ---------- 其他 ----------
+    async function endProcess() {
+        if (confirm("确定要完全结束并退出后端程序吗？")) {
+            try {
+                await fetch('/api/quit', { method: 'POST' });
+                document.body.innerHTML = "<div style='color:white; padding:50px; text-align:center;'>程序已关闭，请手动关闭此页面。</div>";
+            } catch (e) {
+                alert("请求失败，后端可能已经关闭");
+            }
+        }
+    }
+    window.endProcess = endProcess;
+
+    async function triggerLock() {
+        try { await fetch('/api/openlock', { method: 'POST' }); } catch(e) {}
+    }
+    window.triggerLock = triggerLock;
+
+    // 初始化同步
+    window.addEventListener('load', pullFullState);
+    setInterval(pullFullState, 3000);
+</script>
+</body>
+</html>
